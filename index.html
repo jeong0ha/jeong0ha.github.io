@@ -1,4 +1,64 @@
-<html/>
-<head><title>AISW 교실3</title></head>
-<body>공부하기</body>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>캠핑장 지도 예약 | AISW 교실3</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-header-inner">
+      <h1>🏕️ 캠핑장 지도 예약</h1>
+      <button id="myReservationsBtn" class="ghost-btn">내 예약 내역 <span id="myReservationsCount" class="count-badge" hidden>0</span></button>
+    </div>
+  </header>
+
+  <section class="control-bar">
+    <div class="control-bar-inner">
+      <div class="date-display">
+        <span class="date-label" id="selectedDateLabel">오늘</span>
+        <span class="date-sub" id="selectedDateSub"></span>
+      </div>
+      <button id="toggleDateStripBtn" class="primary-btn">다른 날 예약하기</button>
+    </div>
+    <div id="dateStrip" class="date-strip" hidden></div>
+  </section>
+
+  <main class="main-grid">
+    <section class="map-panel">
+      <div class="map-summary" id="mapSummary"></div>
+      <div class="map-wrap">
+        <svg id="koreaMap" viewBox="0 0 470 800" preserveAspectRatio="xMidYMid meet" role="img" aria-label="대한민국 캠핑장 지도"></svg>
+      </div>
+      <div class="legend">
+        <span class="legend-item"><i class="dot available"></i>예약 가능</span>
+        <span class="legend-item"><i class="dot full"></i>예약 마감</span>
+      </div>
+    </section>
+
+    <section class="list-panel">
+      <div class="list-toolbar">
+        <input type="text" id="searchInput" placeholder="캠핑장 이름 또는 지역 검색">
+        <label class="checkbox-filter">
+          <input type="checkbox" id="onlyAvailableCheckbox" checked>
+          예약 가능한 곳만 보기
+        </label>
+      </div>
+      <ul id="campsiteList" class="campsite-list"></ul>
+    </section>
+  </main>
+
+  <div id="detailModal" class="modal-overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true">
+      <button id="closeModalBtn" class="modal-close" aria-label="닫기">✕</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
 </html>
