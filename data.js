@@ -37,24 +37,27 @@ const JEJU_CENTER = [33.38, 126.53];
 // ============================================================
 // 캠핑장 목데이터
 // ============================================================
+// 이름·지역은 실제 존재하는 캠핑장/야영장을 참고했습니다.
+// 요금·정원·평점·예약 가능 여부는 데모용으로 만든 가상의 값이며 실제 예약 현황과 무관합니다.
 const CAMPSITES = [
-  { id: 'c01', name: '남이섬 캠핑장', region: '강원 춘천', lat: 37.79, lon: 127.53, price: 35000, capacity: 4, rating: 4.6, tags: ['오토캠핑', '숲세권'], emoji: '🌲' },
-  { id: 'c02', name: '인제 자작나무숲 캠핑장', region: '강원 인제', lat: 38.07, lon: 128.35, price: 40000, capacity: 4, rating: 4.8, tags: ['글램핑', '포토스팟'], emoji: '🌳' },
-  { id: 'c03', name: '평창 하늘내린 캠핑장', region: '강원 평창', lat: 37.60, lon: 128.53, price: 38000, capacity: 6, rating: 4.7, tags: ['오토캠핑', '반려동물동반'], emoji: '⛰️' },
-  { id: 'c04', name: '가평 자라섬 캠핑장', region: '경기 가평', lat: 37.83, lon: 127.53, price: 32000, capacity: 4, rating: 4.5, tags: ['강변', '오토캠핑'], emoji: '🏞️' },
-  { id: 'c05', name: '양평 두물머리 캠핑장', region: '경기 양평', lat: 37.55, lon: 127.32, price: 30000, capacity: 4, rating: 4.4, tags: ['강변', '감성캠핑'], emoji: '🌅' },
-  { id: 'c06', name: '태안 솔라리스 캠핑장', region: '충남 태안', lat: 36.75, lon: 126.30, price: 42000, capacity: 6, rating: 4.6, tags: ['오션뷰', '글램핑'], emoji: '🏖️' },
-  { id: 'c07', name: '단양 온달 캠핑장', region: '충북 단양', lat: 36.98, lon: 128.37, price: 33000, capacity: 4, rating: 4.5, tags: ['계곡', '오토캠핑'], emoji: '🏔️' },
-  { id: 'c08', name: '무주 덕유산 캠핑장', region: '전북 무주', lat: 35.87, lon: 127.66, price: 31000, capacity: 4, rating: 4.7, tags: ['숲세권', '계곡'], emoji: '🌲' },
-  { id: 'c09', name: '부안 변산 캠핑장', region: '전북 부안', lat: 35.68, lon: 126.53, price: 34000, capacity: 5, rating: 4.3, tags: ['오션뷰', '오토캠핑'], emoji: '🌊' },
-  { id: 'c10', name: '순천만 캠핑장', region: '전남 순천', lat: 34.88, lon: 127.49, price: 29000, capacity: 4, rating: 4.5, tags: ['습지생태', '감성캠핑'], emoji: '🌾' },
-  { id: 'c11', name: '여수 오동도 캠핑장', region: '전남 여수', lat: 34.73, lon: 127.75, price: 39000, capacity: 4, rating: 4.6, tags: ['오션뷰', '글램핑'], emoji: '🏖️' },
-  { id: 'c12', name: '안동 하회마을 캠핑장', region: '경북 안동', lat: 36.54, lon: 128.52, price: 28000, capacity: 4, rating: 4.2, tags: ['전통마을', '강변'], emoji: '🏞️' },
-  { id: 'c13', name: '경주 보문호 캠핑장', region: '경북 경주', lat: 35.85, lon: 129.28, price: 36000, capacity: 5, rating: 4.6, tags: ['호수', '오토캠핑'], emoji: '🌅' },
-  { id: 'c14', name: '거제 바람의언덕 캠핑장', region: '경남 거제', lat: 34.80, lon: 128.60, price: 41000, capacity: 4, rating: 4.7, tags: ['오션뷰', '감성캠핑'], emoji: '🌊' },
-  { id: 'c15', name: '부산 기장 대변항 캠핑장', region: '부산 기장', lat: 35.24, lon: 129.22, price: 37000, capacity: 4, rating: 4.4, tags: ['오션뷰', '오토캠핑'], emoji: '🏖️' },
-  { id: 'c16', name: '제주 협재 캠핑장', region: '제주 한림', lat: 33.39, lon: 126.24, price: 45000, capacity: 4, rating: 4.9, tags: ['오션뷰', '글램핑'], emoji: '🌴' },
-  { id: 'c17', name: '강화 석모도 캠핑장', region: '인천 강화', lat: 37.68, lon: 126.30, price: 27000, capacity: 4, rating: 4.1, tags: ['오션뷰', '반려동물동반'], emoji: '🌅' },
+  { id: 'c01', name: '자라섬 캠핑장', region: '경기 가평', lat: 37.831, lon: 127.535, price: 32000, capacity: 4, rating: 4.5, tags: ['오토캠핑', '강변'], emoji: '🏞️' },
+  { id: 'c02', name: '남이섬 오토캠핑장', region: '강원 춘천', lat: 37.791, lon: 127.525, price: 35000, capacity: 4, rating: 4.6, tags: ['오토캠핑', '숲세권'], emoji: '🌲' },
+  { id: 'c03', name: '대관령자연휴양림', region: '강원 강릉', lat: 37.68, lon: 128.72, price: 20000, capacity: 4, rating: 4.7, tags: ['자연휴양림', '숲세권'], emoji: '🌳' },
+  { id: 'c04', name: '청태산자연휴양림', region: '강원 평창', lat: 37.57, lon: 128.36, price: 18000, capacity: 4, rating: 4.6, tags: ['자연휴양림', '계곡'], emoji: '🌲' },
+  { id: 'c05', name: '유명산자연휴양림', region: '경기 가평', lat: 37.60, lon: 127.43, price: 17000, capacity: 4, rating: 4.4, tags: ['자연휴양림', '계곡'], emoji: '⛰️' },
+  { id: 'c06', name: '설악산국립공원 소공원야영장', region: '강원 속초', lat: 38.17, lon: 128.47, price: 12000, capacity: 4, rating: 4.8, tags: ['국립공원', '야영데크'], emoji: '🏔️' },
+  { id: 'c07', name: '지리산국립공원 화엄사야영장', region: '전남 구례', lat: 35.28, lon: 127.50, price: 11000, capacity: 4, rating: 4.6, tags: ['국립공원', '계곡'], emoji: '🏔️' },
+  { id: 'c08', name: '덕유산국립공원 구천동야영장', region: '전북 무주', lat: 35.85, lon: 127.75, price: 11000, capacity: 4, rating: 4.7, tags: ['국립공원', '계곡'], emoji: '🌲' },
+  { id: 'c09', name: '내장산국립공원 야영장', region: '전북 정읍', lat: 35.48, lon: 126.89, price: 10000, capacity: 4, rating: 4.5, tags: ['국립공원', '숲세권'], emoji: '🍁' },
+  { id: 'c10', name: '몽산포오토캠핑장', region: '충남 태안', lat: 36.62, lon: 126.31, price: 33000, capacity: 5, rating: 4.4, tags: ['오션뷰', '오토캠핑'], emoji: '🏖️' },
+  { id: 'c11', name: '만리포오토캠핑장', region: '충남 태안', lat: 36.78, lon: 126.14, price: 34000, capacity: 5, rating: 4.3, tags: ['오션뷰', '오토캠핑'], emoji: '🌊' },
+  { id: 'c12', name: '안면도자연휴양림', region: '충남 태안', lat: 36.52, lon: 126.32, price: 19000, capacity: 4, rating: 4.6, tags: ['자연휴양림', '숲세권'], emoji: '🌲' },
+  { id: 'c13', name: '옥천자연휴양림', region: '충북 옥천', lat: 36.28, lon: 127.53, price: 16000, capacity: 4, rating: 4.3, tags: ['자연휴양림', '계곡'], emoji: '🌳' },
+  { id: 'c14', name: '남해편백자연휴양림', region: '경남 남해', lat: 34.83, lon: 127.87, price: 18000, capacity: 4, rating: 4.7, tags: ['자연휴양림', '힐링'], emoji: '🌲' },
+  { id: 'c15', name: '거제자연휴양림', region: '경남 거제', lat: 34.85, lon: 128.70, price: 19000, capacity: 4, rating: 4.5, tags: ['자연휴양림', '오션뷰'], emoji: '🌊' },
+  { id: 'c16', name: '완도수목원 야영장', region: '전남 완도', lat: 34.36, lon: 126.79, price: 15000, capacity: 4, rating: 4.4, tags: ['수목원', '숲세권'], emoji: '🌳' },
+  { id: 'c17', name: '김녕 성세기해변 야영장', region: '제주 구좌', lat: 33.556, lon: 126.76, price: 30000, capacity: 4, rating: 4.8, tags: ['오션뷰', '해변'], emoji: '🌴' },
+  { id: 'c18', name: '동막해수욕장 야영장', region: '인천 강화', lat: 37.61, lon: 126.38, price: 27000, capacity: 4, rating: 4.2, tags: ['오션뷰', '반려동물동반'], emoji: '🌅' },
 ];
 
 // ============================================================

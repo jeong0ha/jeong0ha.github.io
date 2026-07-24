@@ -127,6 +127,17 @@ h1, h2, h3 { margin: 0; }
 }
 .date-chip.selected .dow { color: rgba(255,255,255,0.8); }
 
+.data-notice {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 8px 20px;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  background: #fbf8ee;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
 /* Main layout: map centered as hero, list below */
 .main-stack {
   max-width: 1100px;
