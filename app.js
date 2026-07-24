@@ -82,43 +82,64 @@
   }
 
   function drawBaseMap() {
-    const outlinePts = KOREA_OUTLINE.map(([lat, lon]) => project(lat, lon));
-    const land = document.createElementNS(SVG_NS, 'path');
-    land.setAttribute('class', 'land');
-    land.setAttribute('d', catmullRomClosedPath(outlinePts));
-    zoomGroup.appendChild(land);
-
-    const { pxPerLat, pxPerLon } = getPxPerDegree();
-    ISLANDS.forEach((isl) => {
-      const center = project(isl.lat, isl.lon);
-      const island = document.createElementNS(SVG_NS, 'ellipse');
-      island.setAttribute('class', 'island');
-      island.setAttribute('cx', center.x.toFixed(2));
-      island.setAttribute('cy', center.y.toFixed(2));
-      island.setAttribute('rx', (isl.dlon * pxPerLon).toFixed(2));
-      island.setAttribute('ry', (isl.dlat * pxPerLat).toFixed(2));
-      zoomGroup.appendChild(island);
+    KOREA_PROVINCES.forEach((province) => {
+      province.rings.forEach((ring) => {
+        const pts = ring.map(([lat, lon]) => project(lat, lon));
+        const path = document.createElementNS(SVG_NS, 'path');
+        path.setAttribute('class', 'province');
+        path.setAttribute('d', catmullRomClosedPath(pts));
+        zoomGroup.appendChild(path);
+      });
     });
   }
 
   const markerEls = new Map();
 
+  // 가격표 말풍선 마커: 지점(0,0)에 꼬리가 닿고 그 위에 알약 모양 가격 라벨이 뜬다
+  function buildBubbleMarker(site) {
+    const label = `⛺ ${site.price.toLocaleString()}원`;
+    const width = Math.max(46, 15 + label.length * 5.6);
+    const height = 17;
+    const tail = 5;
+    const top = -(tail + height);
+
+    const g = document.createElementNS(SVG_NS, 'g');
+    g.setAttribute('class', 'marker');
+    g.setAttribute('data-site-id', site.id);
+
+    const tailShape = document.createElementNS(SVG_NS, 'polygon');
+    tailShape.setAttribute('class', 'bubble-tail');
+    tailShape.setAttribute('points', `-4,${-tail} 4,${-tail} 0,0`);
+    g.appendChild(tailShape);
+
+    const rect = document.createElementNS(SVG_NS, 'rect');
+    rect.setAttribute('class', 'bubble-body');
+    rect.setAttribute('x', (-width / 2).toFixed(1));
+    rect.setAttribute('y', top);
+    rect.setAttribute('width', width.toFixed(1));
+    rect.setAttribute('height', height);
+    rect.setAttribute('rx', height / 2);
+    g.appendChild(rect);
+
+    const text = document.createElementNS(SVG_NS, 'text');
+    text.setAttribute('class', 'bubble-text');
+    text.setAttribute('x', 0);
+    text.setAttribute('y', top + height / 2);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('dominant-baseline', 'central');
+    text.textContent = label;
+    g.appendChild(text);
+
+    return g;
+  }
+
   function drawMarkers() {
     CAMPSITES.forEach((site) => {
       const pos = project(site.lat, site.lon);
-      const g = document.createElementNS(SVG_NS, 'g');
-      g.setAttribute('class', 'marker');
-      g.setAttribute('data-site-id', site.id);
+      const g = buildBubbleMarker(site);
       g.setAttribute('transform', `translate(${pos.x.toFixed(2)}, ${pos.y.toFixed(2)})`);
 
-      const pin = document.createElementNS(SVG_NS, 'circle');
-      pin.setAttribute('class', 'pin');
-      pin.setAttribute('r', 4.5);
-      pin.setAttribute('cx', 0);
-      pin.setAttribute('cy', 0);
-      g.appendChild(pin);
-
-      g.addEventListener('mouseenter', (e) => showTooltip(site, g));
+      g.addEventListener('mouseenter', () => showTooltip(site, g));
       g.addEventListener('mouseleave', hideTooltip);
       g.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -231,7 +252,7 @@
     const slots = getAvailableSlots(site, state.selectedDate);
     const today = startOfDay(new Date());
     const dayLabel = isSameDay(state.selectedDate, today) ? '오늘' : formatMDShort(state.selectedDate);
-    const rect = markerEl.querySelector('circle').getBoundingClientRect();
+    const rect = markerEl.getBoundingClientRect();
     tooltip.innerHTML = `
       <div class="tt-photo theme-${site.theme}"><span class="tt-photo-emoji">${site.emoji}</span></div>
       <div class="tt-body">
