@@ -25,11 +25,14 @@
     <div id="dateStrip" class="date-strip" hidden></div>
   </section>
 
-  <main class="main-grid">
+  <main class="main-stack">
     <section class="map-panel">
       <div class="map-summary" id="mapSummary"></div>
       <div class="map-wrap">
-        <svg id="koreaMap" viewBox="0 0 470 800" preserveAspectRatio="xMidYMid meet" role="img" aria-label="대한민국 캠핑장 지도"></svg>
+        <svg id="koreaMap" viewBox="0 0 470 800" preserveAspectRatio="xMidYMid meet" role="img" aria-label="대한민국 캠핑장 지도">
+          <g id="mapZoomGroup"></g>
+        </svg>
+        <div class="zoom-hint">마우스 휠로 확대/축소 · 드래그로 이동</div>
       </div>
       <div class="legend">
         <span class="legend-item"><i class="dot available"></i>예약 가능</span>
@@ -48,6 +51,8 @@
       <ul id="campsiteList" class="campsite-list"></ul>
     </section>
   </main>
+
+  <div id="markerTooltip" class="marker-tooltip" hidden></div>
 
   <div id="detailModal" class="modal-overlay" hidden>
     <div class="modal" role="dialog" aria-modal="true">
