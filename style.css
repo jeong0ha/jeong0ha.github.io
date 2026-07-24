@@ -204,7 +204,7 @@ h1, h2, h3 { margin: 0; }
 }
 
 .land { fill: #d7ecdc; stroke: #9fcdae; stroke-width: 1.2; }
-.jeju { fill: #d7ecdc; stroke: #9fcdae; stroke-width: 1.2; }
+.island { fill: #d7ecdc; stroke: #9fcdae; stroke-width: 1.2; }
 
 .marker { cursor: pointer; }
 .marker circle.pin { stroke: #fff; stroke-width: 1; transition: r 0.15s ease; }
@@ -232,18 +232,32 @@ h1, h2, h3 { margin: 0; }
   z-index: 70;
   background: #1f2a24;
   color: #fff;
-  padding: 10px 12px;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 0.78rem;
   line-height: 1.5;
   pointer-events: none;
-  max-width: 200px;
+  width: 220px;
+  overflow: hidden;
   box-shadow: var(--shadow);
   transform: translate(-50%, -100%);
   margin-top: -12px;
 }
-.marker-tooltip .tt-title { font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 4px; }
+.tt-photo {
+  height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tt-photo-emoji { font-size: 2.2rem; }
+.tt-photo.theme-forest { background: linear-gradient(135deg, #2f6b46, #7fbf8f); }
+.tt-photo.theme-ocean { background: linear-gradient(135deg, #1c6fa6, #7fd1e0); }
+.tt-photo.theme-mountain { background: linear-gradient(135deg, #4b5d52, #9fae9e); }
+.tt-photo.theme-river { background: linear-gradient(135deg, #2a7f8a, #8fd6c9); }
+.tt-body { padding: 10px 12px; }
+.marker-tooltip .tt-title { font-weight: 700; font-size: 0.86rem; }
 .marker-tooltip .tt-region { color: #c9d6cd; font-size: 0.72rem; margin-top: 2px; }
+.marker-tooltip .tt-desc { color: #dbe4de; font-size: 0.72rem; margin-top: 6px; }
+.marker-tooltip .tt-price { color: #f0c98a; font-size: 0.74rem; font-weight: 600; margin-top: 6px; }
 .marker-tooltip .tt-status { margin-top: 6px; font-weight: 600; }
 .marker-tooltip .tt-status.available { color: #8fe0b0; }
 .marker-tooltip .tt-status.full { color: #b9c2bd; }
@@ -372,10 +386,24 @@ h1, h2, h3 { margin: 0; }
   cursor: pointer;
   color: var(--text-muted);
 }
-.modal-emoji { font-size: 2.4rem; }
+.modal-photo {
+  height: 140px;
+  margin: -24px -24px 14px;
+  width: calc(100% + 48px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px 16px 0 0;
+}
+.modal-photo .tt-photo-emoji { font-size: 3.2rem; }
+.modal-photo.theme-forest { background: linear-gradient(135deg, #2f6b46, #7fbf8f); }
+.modal-photo.theme-ocean { background: linear-gradient(135deg, #1c6fa6, #7fd1e0); }
+.modal-photo.theme-mountain { background: linear-gradient(135deg, #4b5d52, #9fae9e); }
+.modal-photo.theme-river { background: linear-gradient(135deg, #2a7f8a, #8fd6c9); }
 .modal h2 { font-size: 1.2rem; margin: 8px 0 2px; }
 .modal .modal-region { color: var(--text-muted); font-size: 0.85rem; }
 .modal-tags { display: flex; gap: 6px; margin: 10px 0; flex-wrap: wrap; }
+.modal-desc { font-size: 0.85rem; color: var(--text); line-height: 1.5; margin: 0 0 6px; }
 .modal-info-row {
   display: flex;
   justify-content: space-between;

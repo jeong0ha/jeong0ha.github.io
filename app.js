@@ -88,14 +88,17 @@
     land.setAttribute('d', catmullRomClosedPath(outlinePts));
     zoomGroup.appendChild(land);
 
-    const jejuCenter = project(JEJU_CENTER[0], JEJU_CENTER[1]);
-    const jeju = document.createElementNS(SVG_NS, 'ellipse');
-    jeju.setAttribute('class', 'jeju');
-    jeju.setAttribute('cx', jejuCenter.x.toFixed(2));
-    jeju.setAttribute('cy', jejuCenter.y.toFixed(2));
-    jeju.setAttribute('rx', 26);
-    jeju.setAttribute('ry', 13);
-    zoomGroup.appendChild(jeju);
+    const { pxPerLat, pxPerLon } = getPxPerDegree();
+    ISLANDS.forEach((isl) => {
+      const center = project(isl.lat, isl.lon);
+      const island = document.createElementNS(SVG_NS, 'ellipse');
+      island.setAttribute('class', 'island');
+      island.setAttribute('cx', center.x.toFixed(2));
+      island.setAttribute('cy', center.y.toFixed(2));
+      island.setAttribute('rx', (isl.dlon * pxPerLon).toFixed(2));
+      island.setAttribute('ry', (isl.dlat * pxPerLat).toFixed(2));
+      zoomGroup.appendChild(island);
+    });
   }
 
   const markerEls = new Map();
@@ -220,13 +223,24 @@
   // ============================================================
   // 툴팁
   // ============================================================
+  function priceBand(price) {
+    return `${Math.floor(price / 10000)}만원대`;
+  }
+
   function showTooltip(site, markerEl) {
     const slots = getAvailableSlots(site, state.selectedDate);
+    const today = startOfDay(new Date());
+    const dayLabel = isSameDay(state.selectedDate, today) ? '오늘' : formatMDShort(state.selectedDate);
     const rect = markerEl.querySelector('circle').getBoundingClientRect();
     tooltip.innerHTML = `
-      <div class="tt-title">${site.emoji} ${site.name}</div>
-      <div class="tt-region">${site.region} · ${site.price.toLocaleString()}원/박</div>
-      <div class="tt-status ${slots > 0 ? 'available' : 'full'}">${slots > 0 ? `예약 가능 · ${slots}자리 남음` : '예약 마감'}</div>
+      <div class="tt-photo theme-${site.theme}"><span class="tt-photo-emoji">${site.emoji}</span></div>
+      <div class="tt-body">
+        <div class="tt-title">${site.name}</div>
+        <div class="tt-region">${site.region} · ★ ${site.rating.toFixed(1)}</div>
+        <div class="tt-desc">${site.desc}</div>
+        <div class="tt-price">${priceBand(site.price)} · 1박 ${site.price.toLocaleString()}원~</div>
+        <div class="tt-status ${slots > 0 ? 'available' : 'full'}">${slots > 0 ? `${dayLabel} 예약 가능 · ${slots}자리 남음` : `${dayLabel} 예약 마감`}</div>
+      </div>
     `;
     tooltip.style.left = `${rect.left + rect.width / 2}px`;
     tooltip.style.top = `${rect.top}px`;
@@ -384,13 +398,13 @@
     const dateText = `${formatMD(state.selectedDate)} (${DOW[state.selectedDate.getDay()]})`;
 
     modalBody.innerHTML = `
-      <div class="modal-emoji">${site.emoji}</div>
+      <div class="modal-photo theme-${site.theme}"><span class="tt-photo-emoji">${site.emoji}</span></div>
       <h2>${site.name}</h2>
-      <div class="modal-region">${site.region}</div>
+      <div class="modal-region">${site.region} · ★ ${site.rating.toFixed(1)}</div>
       <div class="modal-tags">${site.tags.map((t) => `<span class="card-tag">${t}</span>`).join('')}</div>
+      <p class="modal-desc">${site.desc}</p>
       <div class="modal-info-row"><span>예약 날짜</span><span>${dateText}</span></div>
       <div class="modal-info-row"><span>1박 요금</span><span>${site.price.toLocaleString()}원</span></div>
-      <div class="modal-info-row"><span>평점</span><span>★ ${site.rating.toFixed(1)}</span></div>
       <div class="modal-info-row"><span>예약 현황</span><span>${slots > 0 ? `${slots}자리 남음` : '마감'}</span></div>
       ${slots > 0 ? `
         <div class="people-select">
